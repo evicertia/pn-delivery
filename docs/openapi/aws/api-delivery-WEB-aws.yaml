@@ -1925,6 +1925,7 @@ components:
           description: tipo di indirizzo PEC, REM, SERCQ, ...
           enum:
             - PEC
+            - EVINOTICE
         address:
           type: string
           example: account@domain.it
@@ -2388,6 +2389,7 @@ components:
         - ANALOG_DELIVERY
         - RECIPIENT_ACCESS
         - PEC_RECEIPT
+        - EVINOTICE_RECEIPT
         - ANALOG_FAILURE_DELIVERY
     LegalFactsId:
       description: Chiavi dei documenti generati durante il processo di consegna cartacea

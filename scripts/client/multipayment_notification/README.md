@@ -15,5 +15,5 @@ Note:
 
 1) lo script esegue un aggiornamento massivo della tabella `pn-Notifications`quindi si raccomanda di eseguire un backup prima della sua esecuzione.
 
-2) lo script viene eseguito sempre nella region `eu-south-1` 
+2) lo script viene eseguito sempre nella region `us-east-1` 
 

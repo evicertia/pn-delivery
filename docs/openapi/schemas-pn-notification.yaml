@@ -474,6 +474,7 @@ components:
           description: tipo di indirizzo PEC, REM, SERCQ, ...
           enum:
             - PEC
+            - EVINOTICE
         address:
           type: string
           x-field-extra-annotation: "@lombok.ToString.Exclude" # NO EXTERNAL

@@ -16,5 +16,5 @@ Note:
 
 1) lo script esegue *update_all_notifications_metadata* un aggiornamento massivo della tabella `pn-NotificationsMetadata` quindi si raccomanda di eseguire un backup prima della sua esecuzione.
 2) lo script esegue *update_all_notification_delegation_metadata* un aggiornamento massivo della tabella `pn-NotificationsDelegationMetadata` quindi si raccomanda di eseguire un backup prima della sua esecuzione.
-3) lo script viene eseguito sempre nella region `eu-south-1` 
+3) lo script viene eseguito sempre nella region `us-east-1` 
 

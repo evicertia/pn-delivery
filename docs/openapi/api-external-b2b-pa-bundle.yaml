@@ -3299,6 +3299,7 @@ components:
           description: tipo di indirizzo PEC, REM, SERCQ, ...
           enum:
             - PEC
+            - EVINOTICE
         address:
           type: string
           example: account@domain.it

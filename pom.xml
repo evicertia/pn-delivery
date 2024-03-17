@@ -40,7 +40,7 @@
         <dependency>
             <groupId>it.pagopa.pn</groupId>
             <artifactId>pn-commons</artifactId>
-            <version>2.2.6</version>
+            <version>2.2.8</version>
         </dependency>
         <dependency>
             <groupId>it.pagopa.pn</groupId>
@@ -523,7 +523,7 @@
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
-                            <inputSpec>https://raw.githubusercontent.com/pagopa/pn-data-vault/1c1bcaef3837a15f866596a6d9af94e3978805ff/docs/openapi/pn-datavault-api-v1.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/docs/openapi/api-pn-datavault-api-v1.yaml</inputSpec>
                             <generatorName>java</generatorName>
                             <library>resttemplate</library>
                             <generateApiTests>false</generateApiTests>
@@ -563,6 +563,35 @@
                                 <openApiNullable>false</openApiNullable>
                                 <useAbstractionForFiles>true</useAbstractionForFiles>
                                 <useBeanValidation>false</useBeanValidation>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-client-evinotice</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <inputSpec>${project.basedir}/docs/openapi/api-evinotice-address-v2.yaml</inputSpec>
+
+                            <generatorName>java</generatorName>
+                            <library>resttemplate</library>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <templateDirectory>${project.build.directory}/dependency-resources/scripts/openapi/templates/5.4.0/client</templateDirectory>
+                            <configOptions>
+                                <modelPackage>${project.groupId}.delivery.generated.openapi.msclient.evinotice.v2.dto</modelPackage>
+                                <apiPackage>${project.groupId}.delivery.generated.openapi.msclient.evinotice.v2.api</apiPackage>
+                                <modelNameSuffix>Dto</modelNameSuffix>
+                                <dateLibrary>java8</dateLibrary>
+                                <annotationLibrary>none</annotationLibrary>
+                                <documentationProvider>source</documentationProvider>
+                                <openApiNullable>false</openApiNullable>
+                                <useAbstractionForFiles>true</useAbstractionForFiles>
+                                <useTags>true</useTags>
+                                <useBeanValidation>false</useBeanValidation>
+                                <disablePropertyNaming>true</disablePropertyNaming>
                             </configOptions>
                         </configuration>
                     </execution>

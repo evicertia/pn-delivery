@@ -104,6 +104,7 @@ components:
           - ANALOG_DELIVERY: atto di consegna cartacea
           - RECIPIENT_ACCESS: atto di consegna per avvenuto accesso alla piattaforma
           - PEC_RECEIPT: ricevuta PEC
+          - EVINOTICE_RECEIPT: ricevuta EVINOTICE
       type: string
 
     LegalFactList:

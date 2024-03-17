@@ -1,0 +1,110 @@
+openapi: 3.0.0
+info:
+  title: Namirial Evicertia API
+  description: |
+    OpenApi definition for Evicertia Evidences API
+  version: 2.0.0
+servers:
+  - url: https://app.ecertia.com/api/v2
+tags:
+  - name: evinotice
+    description: EviNotice features
+paths:
+  /EviNotice/Submit:
+    post:
+      summary: EviNotice's submit service
+      description: Allows submission of a new eviNotice. Returns the evidence unique id
+      tags:
+        - evinotice
+      security:
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/EviNotice'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EviNoticeResponse'
+        '401':
+          description: Not authorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+        '400':
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+        '500':
+          description: Internal server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    EviNotice:
+      type: object
+      properties:
+        Subject:
+          type: string
+        Body:
+          type: string
+        QERDSEnrollmentProfile:
+          type: string
+        QERDSEnrollmentAllowed:
+          type: string
+        RecipientLegalIdRequired:
+          type: string
+        RecipientLegalIdValue:
+          type: string
+        RecipientLegalIdKind:
+          type: string
+        RecipientAddress:
+          type: string
+        CertificationLevel:
+          type: string
+        AffidavitKinds:
+          type: array
+          items:
+            type: string
+        EvidenceAccessControlMethod:
+          type: string
+        DeliverySignFixedEmail:
+          type: string
+        DeliverySignMethod:
+          type: string
+        CommitmentCommentsAllowed:
+          type: string
+        CommitmentChoice:
+          type: string
+    EviNoticeResponse:
+      type: object
+      properties:
+        Id:
+          type: string
+    ProblemDetail:
+      type: object
+      properties:
+        Type:
+          type: string
+        Detail:
+          type: string
+        Status:
+          type: string
+        Title:
+          type: string
+        RequestId:
+          type: string

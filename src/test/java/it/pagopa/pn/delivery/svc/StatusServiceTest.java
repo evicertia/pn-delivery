@@ -1,6 +1,7 @@
 package it.pagopa.pn.delivery.svc;
 
 import it.pagopa.pn.commons.exceptions.PnInternalException;
+import it.pagopa.pn.delivery.PnDeliveryConfigs;
 import it.pagopa.pn.delivery.generated.openapi.server.v1.dto.NotificationRecipientV23;
 import it.pagopa.pn.delivery.generated.openapi.server.v1.dto.NotificationStatus;
 import it.pagopa.pn.delivery.generated.openapi.server.v1.dto.RequestUpdateStatusDto;
@@ -32,6 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class StatusServiceTest {
@@ -48,14 +50,16 @@ class StatusServiceTest {
     private NotificationDelegatedService notificationDelegatedService;
     @Mock
     private PnExternalRegistriesClientImpl externalRegistriesClient;
-    
+    @Mock
+    private PnDeliveryConfigs pnDeliveryConfig;
+
     private StatusService statusService;
     @Mock
     private NotificationCostEntityDao notificationCostEntityDao;
 
     @BeforeEach
     public void setup() {
-        statusService = new StatusService(notificationDao, notificationMetadataEntityDao, notificationDelegationMetadataEntityDao, notificationDelegatedService, notificationCostEntityDao, externalRegistriesClient);
+        statusService = new StatusService(notificationDao, notificationMetadataEntityDao, notificationDelegationMetadataEntityDao, notificationDelegatedService, notificationCostEntityDao, externalRegistriesClient, pnDeliveryConfig);
     }
 
     @ExtendWith(MockitoExtension.class)

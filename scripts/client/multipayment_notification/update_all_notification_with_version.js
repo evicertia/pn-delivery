@@ -24,7 +24,7 @@ if(awsProfile.indexOf('sso_')>=0){ // sso profile
   credentials = new AWS.SharedIniFileCredentials({profile: awsProfile});
   AWS.config.credentials = credentials;
 }
-AWS.config.update({region: 'eu-south-1'});
+AWS.config.update({region: 'us-east-1'});
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 

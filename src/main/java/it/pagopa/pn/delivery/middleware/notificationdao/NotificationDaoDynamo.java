@@ -98,9 +98,10 @@ public class NotificationDaoDynamo implements NotificationDao {
 				.municipalityDetails( notificationPhysicalAddress.getMunicipalityDetails() );
 	}
 
-	private AddressDto createDigitalDomicile(NotificationDigitalAddress digitalAddress) {
-		return digitalAddress == null ? null : new AddressDto()
-				.value( digitalAddress.getAddress() );
+	private DigitalAddressDto createDigitalDomicile(NotificationDigitalAddress digitalAddress) {
+		return digitalAddress == null ? null : new DigitalAddressDto()
+        		.type(mapDigitalAddressTypeEnum(digitalAddress.getType()))
+        		.value(digitalAddress.getAddress());
 	}
 
 	@Override
@@ -182,12 +183,32 @@ public class NotificationDaoDynamo implements NotificationDao {
 		}
 	}
 
-	private NotificationDigitalAddress setNotificationDigitalAddress(AddressDto addressDto ) {
-		return addressDto == null ? null : NotificationDigitalAddress.builder()
-				.type( it.pagopa.pn.delivery.generated.openapi.server.v1.dto.NotificationDigitalAddress.TypeEnum.PEC )
-				.address( addressDto.getValue() )
-				.build();
+	private NotificationDigitalAddress setNotificationDigitalAddress(DigitalAddressDto digitalAddressDto ) {
+		if (digitalAddressDto == null) return null;
+
+		return NotificationDigitalAddress.builder()
+			.type(mapNotificationDigitalAddressTypeEnum(digitalAddressDto.getType()))
+			.address(digitalAddressDto.getValue())
+			.build();
 	}
+
+	private DigitalAddressDto.TypeEnum  mapDigitalAddressTypeEnum(
+		it.pagopa.pn.delivery.generated.openapi.server.v1.dto.NotificationDigitalAddress.TypeEnum digitalTypeEnum) {
+		return switch (digitalTypeEnum) {
+			case PEC -> DigitalAddressDto.TypeEnum.PEC;
+			case EVINOTICE -> DigitalAddressDto.TypeEnum.EVINOTICE;
+			default -> null;
+		};
+	}
+
+	private it.pagopa.pn.delivery.generated.openapi.server.v1.dto.NotificationDigitalAddress.TypeEnum mapNotificationDigitalAddressTypeEnum(DigitalAddressDto.TypeEnum digitalTypeEnum) {
+		return switch (digitalTypeEnum) {
+			case PEC -> it.pagopa.pn.delivery.generated.openapi.server.v1.dto.NotificationDigitalAddress.TypeEnum.PEC;
+			case EVINOTICE -> it.pagopa.pn.delivery.generated.openapi.server.v1.dto.NotificationDigitalAddress.TypeEnum.EVINOTICE;
+			default -> null;
+		};
+	}
+
 
 	private NotificationPhysicalAddress setNotificationPhysicalAddress(AnalogDomicile analogDomicile ) {
 		return analogDomicile == null ? null : NotificationPhysicalAddress.builder()

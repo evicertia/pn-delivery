@@ -17,14 +17,14 @@ console.log("Using profile " + awsProfile);
 function awsProfileConfig() {
   if(awsProfile.indexOf('sso_')>=0){
     return { 
-      region: "eu-south-1", 
+      region: "us-east-1", 
       credentials: fromIni({ 
         profile: awsProfile,
       })
     }
   }else{
     return { 
-      region: "eu-south-1", 
+      region: "us-east-1", 
       credentials: fromIni({ 
         profile: awsProfile,
         roleAssumer: async (sourceCredentials, params) => {

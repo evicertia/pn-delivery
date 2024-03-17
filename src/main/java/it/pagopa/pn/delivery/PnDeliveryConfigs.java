@@ -36,6 +36,18 @@ public class PnDeliveryConfigs {
 
     private String externalRegistriesBaseUrl;
 
+    private String clientEviNoticeBasepath;
+
+    private String clientEviNoticeUserName;
+
+    private String clientEviNoticePass;
+
+    private String eviNoticeCertificateFile;
+
+    private String eviNoticeCertificatePin;
+
+    private String eviNoticeQERDSProfileByEmail;
+
     private Topics topics;
 
     private Duration preloadUrlDuration;

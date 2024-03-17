@@ -1,7 +1,8 @@
 package it.pagopa.pn.delivery.middleware.notificationdao.entities;
 
 public enum DigitalAddressTypeEntity {
-    PEC("PEC");
+    PEC("PEC"),
+    EVINOTICE("EVINOTICE");
 
     private String value;
 
