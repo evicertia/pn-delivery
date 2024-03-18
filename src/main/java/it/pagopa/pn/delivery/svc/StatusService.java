@@ -215,15 +215,23 @@ public class StatusService {
             });
     }
 
+    private String getEviNoticeBody(InternalNotification notification){
+        String notificationUrl = String.format("%s%s/dettaglio", pnDeliveryConfig.getEviNoticePagoPaNotificationUrl(), notification.getIun());
+
+        String body = "<h2>" + notification.getSubject() + "</h2><br><br>";
+        body += "You can check the notification at the following link : <br><br>";
+        body += "<a target='blank' href='" + notificationUrl + "/dettaglio'>Open Notification at PagoPA</a>";
+
+        return body;
+    }
+
     private void sendEviNotice(InternalNotification notification, String address)
     {
         WebClient webClient = createEviNoticeClient(pnDeliveryConfig);
         EviNotice eviNoticeDTO = new EviNotice();
 
-        String body = notification.getSubject() + "<br><br>You can check the notification at the following link : <br>";
-        body += "<a href='https://cittadini.dev.notifichedigitali.it/notifiche/" + notification.getPaProtocolNumber() + "/dettaglio'>See at PagoPA</a>";
         eviNoticeDTO.setSubject("New PagoPA Notification received");
-        eviNoticeDTO.setBody(body);
+        eviNoticeDTO.setBody(getEviNoticeBody(notification));
         eviNoticeDTO.setCertificationLevel("QERDS");
         eviNoticeDTO.setQeRDSEnrollmentProfile(pnDeliveryConfig.getEviNoticeQERDSProfileByEmail());
         eviNoticeDTO.setQeRDSEnrollmentAllowed("true");

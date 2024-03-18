@@ -48,6 +48,8 @@ public class PnDeliveryConfigs {
 
     private String eviNoticeQERDSProfileByEmail;
 
+    private String eviNoticePagoPaNotificationUrl;
+
     private Topics topics;
 
     private Duration preloadUrlDuration;
