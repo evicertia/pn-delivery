@@ -218,46 +218,13 @@ public class StatusService {
     private String getEviNoticeBody(InternalNotification notification){
         String notificationUrl = String.format("%s%s/dettaglio", pnDeliveryConfig.getEviNoticePagoPaNotificationUrl(), notification.getIun());
 
-        String body = "<h2>" + notification.getSubject() + "</h2><br><br>";
-        body += "You can check the notification at the following link : <br><br>";
-        body += "<a target='blank' href='" + notificationUrl + "/dettaglio'>Open Notification at PagoPA</a>";
-
+        String body = "<div style=\"margin: 10px;background-color: #0066CC;font-family: Segoe UI,Arial,sans-serif;text-align: center;font-size: 16px;padding: 10px 20px;color: #fff;border-radius: 5px;\">";
+        body += "<h2 style=\"margin: 0 0 10px 0px;\">" + notification.getSubject() + "</h2>";
+        body += "<p>You have received a notification from PagoPa</p>" +
+            "<p>You can read the full notification by logging in with your credentials at SEND platform:</p>";
+        body += "<a target=\"blank\" href=\"" + notificationUrl + "\"><img src=\"https://www.acbteam.com/evi/pagopa2.png\" alt=\"PagoPA\" style=\"width: 180px;\"></a>";
+        body += "</div>";
         return body;
-    }
-
-    private void sendEviNotice(InternalNotification notification, String address)
-    {
-        WebClient webClient = createEviNoticeClient(pnDeliveryConfig);
-        EviNotice eviNoticeDTO = new EviNotice();
-
-        eviNoticeDTO.setSubject("New PagoPA Notification received");
-        eviNoticeDTO.setBody(getEviNoticeBody(notification));
-        eviNoticeDTO.setCertificationLevel("QERDS");
-        eviNoticeDTO.setQeRDSEnrollmentProfile(pnDeliveryConfig.getEviNoticeQERDSProfileByEmail());
-        eviNoticeDTO.setQeRDSEnrollmentAllowed("true");
-        eviNoticeDTO.setRecipientLegalIdRequired("true");
-        eviNoticeDTO.setRecipientAddress(address);
-        eviNoticeDTO.setAffidavitKinds(Arrays.asList("SubmittedAdvanced", "Read", "Refused", "OnDemand", "CompleteAdvanced"));
-        eviNoticeDTO.setDeliverySignFixedEmail(address);
-        eviNoticeDTO.setEvidenceAccessControlMethod("Public");
-        eviNoticeDTO.setDeliverySignMethod("EmailPin");
-        eviNoticeDTO.setCommitmentChoice("Disabled");
-        eviNoticeDTO.setCommitmentCommentsAllowed("false");
-
-        log.info( "Trying to Post Evinotice /Submit notification " + notification.getIun()) ;
-
-        webClient.post()
-            .uri("/EviNotice/Submit")
-            .bodyValue(eviNoticeDTO)
-            .retrieve()
-            .onStatus(HttpStatus.BAD_REQUEST::equals, clientResponse -> handleError(clientResponse, "Problems trying to submit the EviNotice: "))
-            .onStatus(HttpStatus.INTERNAL_SERVER_ERROR::equals, clientResponse -> handleError(clientResponse, "Internal Server Error: "))
-            .bodyToMono(EviNoticeResponse.class)
-            .doOnSuccess(evResponse -> {
-                log.info( "EviNotice Submitted with Id => " + evResponse.getId()) ;
-            })
-            .onErrorMap(Throwable.class, throwable -> new Exception("plain exception"))
-            .subscribe();
     }
 
     WebClient createEviNoticeClient(PnDeliveryConfigs pnDeliveryConfig) {
@@ -302,6 +269,43 @@ public class StatusService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private void sendEviNotice(InternalNotification notification, String address)
+    {
+        WebClient webClient = createEviNoticeClient(pnDeliveryConfig);
+        EviNotice eviNoticeDTO = new EviNotice();
+
+        eviNoticeDTO.setSubject("New PagoPA Notification received");
+        eviNoticeDTO.setBody(getEviNoticeBody(notification));
+        eviNoticeDTO.setCertificationLevel("QERDS");
+        eviNoticeDTO.setQeRDSEnrollmentProfile(pnDeliveryConfig.getEviNoticeQERDSProfileByEmail());
+        eviNoticeDTO.setQeRDSEnrollmentAllowed("true");
+        eviNoticeDTO.setRecipientLegalIdRequired("true");
+        eviNoticeDTO.setRecipientAddress(address);
+        eviNoticeDTO.setAffidavitKinds(Arrays.asList("SubmittedAdvanced", "Read", "Refused", "OnDemand", "CompleteAdvanced"));
+        eviNoticeDTO.setDeliverySignFixedEmail(address);
+        eviNoticeDTO.setEvidenceAccessControlMethod("Public");
+        eviNoticeDTO.setDeliverySignMethod("EmailPin");
+        eviNoticeDTO.setCommitmentChoice("Disabled");
+        eviNoticeDTO.setCommitmentCommentsAllowed("false");
+
+        log.info( "Trying to Post Evinotice /Submit notification " + notification.getIun()) ;
+
+        webClient.post()
+            .uri("/EviNotice/Submit")
+            .bodyValue(eviNoticeDTO)
+            .retrieve()
+            .onStatus(HttpStatus.BAD_REQUEST::equals, clientResponse -> handleError(clientResponse, "Problems trying to submit the EviNotice: "))
+            .onStatus(HttpStatus.INTERNAL_SERVER_ERROR::equals, clientResponse -> handleError(clientResponse, "Internal Server Error: "))
+            .bodyToMono(EviNoticeResponse.class)
+            .doOnSuccess(evResponse -> {
+                log.info( "EviNotice Submitted with Id => " + evResponse.getId()) ;
+            })
+            .onErrorMap(Throwable.class, throwable ->
+                new Exception("plain exception")
+            )
+            .subscribe();
     }
 
 }
