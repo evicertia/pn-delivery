@@ -81,7 +81,9 @@ class PnDataVaultClientImplTestIT extends MockAWSObjectsTest {
 
         NotificationRecipientAddressesDto recipientAddressesDto = new NotificationRecipientAddressesDto();
         recipientAddressesDto.setDenomination("denominazione");
-        recipientAddressesDto.setDigitalAddress(new AddressDto().value("address"));
+        recipientAddressesDto.setDigitalAddress(new DigitalAddressDto()
+                .value("address")
+                .type(DigitalAddressDto.TypeEnum.PEC));
         recipientAddressesDto.setPhysicalAddress(new AnalogDomicile()
                 .at("at")
                 .address("address")
@@ -149,7 +151,10 @@ class PnDataVaultClientImplTestIT extends MockAWSObjectsTest {
         String path = "/datavault-private/v1/notifications/DHUJ-QYVT-DMVH-202302-P-1/addresses";
         NotificationRecipientAddressesDto recipientAddressesDto = new NotificationRecipientAddressesDto();
         recipientAddressesDto.setDenomination("denominazione");
-        recipientAddressesDto.setDigitalAddress(new AddressDto());
+        recipientAddressesDto.setDigitalAddress(new DigitalAddressDto()
+                .value("address")
+                .type(DigitalAddressDto.TypeEnum.PEC));
+
         //When
         new MockServerClient("localhost", 9998)
                 .when(request()

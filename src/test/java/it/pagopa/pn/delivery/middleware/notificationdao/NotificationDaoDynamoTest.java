@@ -103,7 +103,10 @@ class NotificationDaoDynamoTest {
 
         NotificationRecipientAddressesDto notificationRecipientAddressesDto = new NotificationRecipientAddressesDto();
         notificationRecipientAddressesDto.setDenomination( "recipientDenomination" );
-        notificationRecipientAddressesDto.setDigitalAddress( new AddressDto().value( "digitalAddress" ) );
+        notificationRecipientAddressesDto.setDigitalAddress(new DigitalAddressDto()
+                .value("digitalAddress")
+                .type(DigitalAddressDto.TypeEnum.PEC));
+
         notificationRecipientAddressesDto.setPhysicalAddress( new AnalogDomicile()
                 .address( "physicalAddress" )
                 .addressDetails( "addressDetail" )
@@ -115,7 +118,9 @@ class NotificationDaoDynamoTest {
 
         NotificationRecipientAddressesDto notificationRecipientAddressesDto1 = new NotificationRecipientAddressesDto();
         notificationRecipientAddressesDto1.setDenomination( "recipientDenomination1" );
-        notificationRecipientAddressesDto1.setDigitalAddress( new AddressDto().value( "digitalAddress1" ) );
+        notificationRecipientAddressesDto.setDigitalAddress(new DigitalAddressDto()
+                .value("digitalAddress1")
+                .type(DigitalAddressDto.TypeEnum.PEC));
         notificationRecipientAddressesDto1.setPhysicalAddress( new AnalogDomicile()
                 .address( "physicalAddress1" )
                 .addressDetails( "addressDetail1" )
@@ -165,7 +170,9 @@ class NotificationDaoDynamoTest {
 
         NotificationRecipientAddressesDto notificationRecipientAddressesDto = new NotificationRecipientAddressesDto();
         notificationRecipientAddressesDto.setDenomination( "recipientDenomination" );
-        notificationRecipientAddressesDto.setDigitalAddress( new AddressDto().value( "digitalAddress" ) );
+        notificationRecipientAddressesDto.setDigitalAddress(new DigitalAddressDto()
+                .value("digitaladdress")
+                .type(DigitalAddressDto.TypeEnum.PEC));
         notificationRecipientAddressesDto.setPhysicalAddress( new AnalogDomicile()
                 .address( "physicalAddress" )
                 .addressDetails( "addressDetail" )
@@ -177,7 +184,9 @@ class NotificationDaoDynamoTest {
 
         NotificationRecipientAddressesDto notificationRecipientAddressesDto1 = new NotificationRecipientAddressesDto();
         notificationRecipientAddressesDto1.setDenomination( "recipientDenomination1" );
-        notificationRecipientAddressesDto1.setDigitalAddress( new AddressDto().value( "digitalAddress1" ) );
+        notificationRecipientAddressesDto1.setDigitalAddress(new DigitalAddressDto()
+                .value("digitalAddress1")
+                .type(DigitalAddressDto.TypeEnum.PEC));
         notificationRecipientAddressesDto1.setPhysicalAddress( new AnalogDomicile()
                 .address( "physicalAddress1" )
                 .addressDetails( "addressDetail1" )
